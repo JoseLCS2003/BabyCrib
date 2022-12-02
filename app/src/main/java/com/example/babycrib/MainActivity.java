@@ -1,9 +1,14 @@
 package com.example.babycrib;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button inicial, registrase;
     EditText correo, contra;
+    int cont = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +33,14 @@ public class MainActivity extends AppCompatActivity {
         inicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (correo.getText().toString().isEmpty() || contra.getText().toString().isEmpty()){
+                if (correo.getText().toString().isEmpty() || contra.getText().toString().isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Falta Datos", Toast.LENGTH_SHORT).show();
-                }
-                else if( contra.getText().toString().length() < 8){
+                } else if (!isEmail(correo.getText().toString())) {
+                    Toast.makeText(MainActivity.this, "Correo no valido", Toast.LENGTH_SHORT).show();
+                } else if (contra.getText().toString().length() < 8) {
                     Toast.makeText(MainActivity.this, "La contraseña debe ser mayor a 8 caracteres", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent inicialSesion=new Intent(getApplicationContext(),Home.class);
+                } else {
+                    Intent inicialSesion = new Intent(getApplicationContext(), Home.class);
                     startActivity(inicialSesion);
                 }
             }
@@ -42,12 +48,20 @@ public class MainActivity extends AppCompatActivity {
         registrase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registrase=new Intent(getApplicationContext(),Registrase.class);
+                Intent registrase = new Intent(getApplicationContext(), Registrase.class);
                 startActivity(registrase);
             }
         });
-        
 
+    }
 
+    public boolean isEmail(String cadena) {
+        boolean resultado;
+        if (Patterns.EMAIL_ADDRESS.matcher(cadena).matches()) {
+            resultado = true;
+        } else {
+            resultado = false;
+        }
+        return resultado;
     }
 }
