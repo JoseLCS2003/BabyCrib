@@ -2,6 +2,7 @@ package com.example.babycrib;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -28,13 +29,18 @@ public class Registrase extends AppCompatActivity {
         registro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isEmail(correo.getText().toString())){
+                if(nombre.getText().toString().isEmpty() || correo.getText().toString().isEmpty() || telefono.getText().toString().isEmpty() || contra.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Falta Datos", Toast.LENGTH_SHORT).show();
+                }
+                else if(!isEmail(correo.getText().toString())){
                     Toast.makeText(Registrase.this, "Correo no Valido", Toast.LENGTH_SHORT).show();
                 }
                 else if (contra.getText().toString().length() < 8) {
                     Toast.makeText(Registrase.this, "La contraseña debe ser mayor a 8 caracteres", Toast.LENGTH_SHORT).show();
                 }
                 else{
+                    Intent home=new Intent(getApplicationContext(),Home.class);
+                    startActivity(home);
                     Toast.makeText(Registrase.this, "Registrado", Toast.LENGTH_SHORT).show();
                 }
             }
