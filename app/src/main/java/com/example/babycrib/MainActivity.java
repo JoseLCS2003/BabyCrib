@@ -14,11 +14,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.babycrib.Singleton.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     Button inicial, registrase;
     EditText correo, contra;
     int cont = 0;
+    VolleySingleton instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         registrase = findViewById(R.id.botonRegistra);
         correo = findViewById(R.id.email);
         contra = findViewById(R.id.contraseña);
-
+        instance=VolleySingleton.getInstance(this);
         inicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (contra.getText().toString().length() < 8) {
                     Toast.makeText(MainActivity.this, "La contraseña debe ser mayor a 8 caracteres", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent inicialSesion = new Intent(getApplicationContext(), Home.class);
-                    startActivity(inicialSesion);
+                    inicial.setEnabled(false);
+                    inciarSesion();
+                    inicial.setEnabled(true);
                 }
             }
         });
@@ -53,6 +64,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void inciarSesion()
+    {
+        JSONObject datos = new JSONObject();
+        try {
+            datos.put("email",correo.getText().toString());
+            datos.put("password",contra.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                "http://192.168.100.180:8000/api/logging",
+                datos,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        CountDownTimer t =new CountDownTimer(2000,1000) {
+                            @Override
+                            public void onTick(long l) {
+                                Long d = l / 1000;
+                            }
+
+                            @Override
+                            public void onFinish() {
+                                Intent i=new Intent(getApplicationContext(),Home.class);
+                                startActivity(i);
+                            }
+                        }.start();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        instance.addToRequestQueue(jsonObjectRequest);
     }
 
     public boolean isEmail(String cadena) {

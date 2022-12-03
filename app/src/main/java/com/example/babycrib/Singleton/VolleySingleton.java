@@ -1,4 +1,4 @@
-package com.example.babycrib.Modelos;
+package com.example.babycrib.Singleton;
 
 import android.content.Context;
 
@@ -6,12 +6,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class volleySingleton {
-    private static  volleySingleton volleySingleton;
+public class VolleySingleton {
+    private static VolleySingleton volleySingleton;
     private RequestQueue request;
     private static Context contexto;
 
-    private volleySingleton(Context context) {
+    private VolleySingleton(Context context) {
         contexto=context;
         request=getRequestQueue();
     }
@@ -23,9 +23,9 @@ public class volleySingleton {
         return request;
     }
 
-    public static synchronized volleySingleton getInstance(Context context){
+    public static synchronized VolleySingleton getInstance(Context context){
         if (volleySingleton==null){
-            volleySingleton=new volleySingleton(context);
+            volleySingleton=new VolleySingleton(context);
         }
         return volleySingleton;
     }
