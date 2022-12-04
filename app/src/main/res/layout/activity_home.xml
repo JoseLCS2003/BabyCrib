@@ -81,16 +81,16 @@
                 android:layout_height="wrap_content"
                 android:text="4:00 P.M"
                 />
-                <Button
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="mas detalle..."
-                    app:cornerRadius="20dp"
-                    style="?attr/materialButtonOutlinedStyle"
-                    app:strokeColor="#8E24AA"
-                    android:layout_gravity="end"
-                    />
+
+            <Button
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="10dp"
+                android:text="mas detalle..."
+                app:cornerRadius="20dp"
+                app:strokeColor="#8E24AA" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

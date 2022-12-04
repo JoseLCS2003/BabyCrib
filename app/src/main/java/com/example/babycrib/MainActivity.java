@@ -3,8 +3,10 @@ package com.example.babycrib;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Patterns;
@@ -34,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        if(preferences.getString("token","error") != "error"){
+            Intent i=new Intent(getApplicationContext(),Home.class);
+            startActivity(i);
+        }
         inicial = findViewById(R.id.botonLogin);
         registrase = findViewById(R.id.botonRegistra);
         correo = findViewById(R.id.email);
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Toast.makeText(MainActivity.this, "Iniciando sesion", Toast.LENGTH_SHORT).show();
                         CountDownTimer t =new CountDownTimer(2000,1000) {
                             @Override
                             public void onTick(long l) {
@@ -89,8 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onFinish() {
+                                try {
+                                    guardarToken(response.getJSONObject("data").getString("token"),
+                                            response.getJSONObject("data").getInt("id"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 Intent i=new Intent(getApplicationContext(),Home.class);
-                                startActivityForResult(i,0);
+                                startActivity(i);
                             }
                         }.start();
                     }
@@ -105,6 +118,15 @@ public class MainActivity extends AppCompatActivity {
         instance.addToRequestQueue(jsonObjectRequest);
     }
 
+    public void guardarToken(String token,int id)
+    {
+        SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("token",token);
+        editor.putInt("id",id);
+        editor.commit();
+    }
+
     public boolean isEmail(String cadena) {
         boolean resultado;
         if (Patterns.EMAIL_ADDRESS.matcher(cadena).matches()) {
@@ -113,19 +135,5 @@ public class MainActivity extends AppCompatActivity {
             resultado = false;
         }
         return resultado;
-    }
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            super.finish();
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            finish();
-        }
     }
 }

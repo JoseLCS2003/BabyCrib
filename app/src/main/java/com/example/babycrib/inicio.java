@@ -2,7 +2,9 @@ package com.example.babycrib;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -24,16 +26,16 @@ public class inicio extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                startActivityForResult(i,0);
+                SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+                if(preferences.getString("token","error") != "error"){
+                    Intent i=new Intent(getApplicationContext(),Home.class);
+                    startActivity(i);
+                }
+                else {
+                    Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(i);
+                }
             }
         }.start();
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            finish();
-        }
     }
 }

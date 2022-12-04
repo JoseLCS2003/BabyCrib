@@ -3,6 +3,7 @@ package com.example.babycrib;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Patterns;
@@ -77,7 +78,7 @@ public class Registrase extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(Registrase.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
-                        CountDownTimer t =new CountDownTimer(2000,1000) {
+                        CountDownTimer t =new CountDownTimer(1000,1000) {
                             @Override
                             public void onTick(long l) {
                                 Long d = l / 1000;
@@ -94,7 +95,8 @@ public class Registrase extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Registrase.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(Registrase.this, "Error al momento de registrar", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
