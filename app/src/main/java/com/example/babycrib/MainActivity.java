@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFinish() {
                                 Intent i=new Intent(getApplicationContext(),Home.class);
-                                startActivity(i);
+                                startActivityForResult(i,0);
                             }
                         }.start();
                     }
@@ -113,5 +113,19 @@ public class MainActivity extends AppCompatActivity {
             resultado = false;
         }
         return resultado;
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            super.finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            finish();
+        }
     }
 }

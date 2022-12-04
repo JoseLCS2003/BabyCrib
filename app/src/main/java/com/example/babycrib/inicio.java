@@ -25,8 +25,15 @@ public class inicio extends AppCompatActivity {
             @Override
             public void onFinish() {
                 Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
+                startActivityForResult(i,0);
             }
         }.start();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 0) {
+            finish();
+        }
     }
 }
