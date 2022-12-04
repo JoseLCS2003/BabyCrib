@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toStartOf="@+id/end"
         app:layout_constraintStart_toStartOf="@+id/start"
         app:layout_constraintBottom_toTopOf="@id/txtNomCuna"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="30dp"/>
 
     <TextView
         android:id="@+id/txtNomCuna"
@@ -74,7 +74,6 @@
         android:layout_height="wrap_content"
         android:text="Descripcion de la cuna"
         android:textSize="20sp"
-        android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@id/edtNomCuna"
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintStart_toStartOf="@id/start"
@@ -86,21 +85,89 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
-        android:lines="4"
-        android:maxLines="4"
+        android:lines="3"
+        android:maxLines="3"
         app:layout_constraintTop_toBottomOf="@id/txtDesCuna"
         app:layout_constraintEnd_toStartOf="@+id/end"
         app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintBottom_toTopOf="@id/AgregarCuna"/>
+        app:layout_constraintBottom_toTopOf="@id/Sensor1"
+        />
 
+    <CheckBox
+        android:id="@+id/Sensor1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor1"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintTop_toBottomOf="@id/edtDesCuna"
+        app:layout_constraintBottom_toTopOf="@id/Sensor2"
+        />
+    <CheckBox
+        android:id="@+id/Sensor2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor2"
+        app:layout_constraintTop_toBottomOf="@id/Sensor1"
+        app:layout_constraintBottom_toTopOf="@id/Sensor3"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
+    <CheckBox
+        android:id="@+id/Sensor3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor3"
+        app:layout_constraintTop_toBottomOf="@id/Sensor2"
+        app:layout_constraintBottom_toTopOf="@id/Sensor4"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
+    <CheckBox
+        android:id="@+id/Sensor4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor4"
+        app:layout_constraintTop_toBottomOf="@id/Sensor3"
+        app:layout_constraintBottom_toTopOf="@id/Sensor5"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
+    <CheckBox
+        android:id="@+id/Sensor5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor5"
+        app:layout_constraintTop_toBottomOf="@id/Sensor4"
+        app:layout_constraintBottom_toTopOf="@id/Sensor6"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
+    <CheckBox
+        android:id="@+id/Sensor6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sensor6"
+        app:layout_constraintTop_toBottomOf="@id/Sensor5"
+        app:layout_constraintBottom_toTopOf="@id/AgregarCuna"
+        app:layout_constraintStart_toStartOf="@id/start"
+        app:layout_constraintEnd_toEndOf="@id/end"
+        app:layout_constraintHorizontal_bias="0.1"
+        />
     <Button
         android:id="@+id/AgregarCuna"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar Cuna"
+        app:cornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/Sensor6"
         app:layout_constraintEnd_toStartOf="@+id/end"
         app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@id/edtDesCuna"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintBottom_toBottomOf="@id/bottom"/>
 
