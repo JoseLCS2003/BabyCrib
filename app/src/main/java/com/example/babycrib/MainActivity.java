@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        iniciar();
+    }
+    private void iniciar()
+    {
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         if(preferences.getString("token","error") != "error"){
             Intent i=new Intent(getApplicationContext(),Home.class);
@@ -69,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(registrase);
             }
         });
-
     }
     public void inciarSesion()
     {
@@ -111,7 +114,16 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+                        if(error.networkResponse.statusCode == 401)
+                        {
+                            Toast.makeText(MainActivity.this, "No se a activado el usuario", Toast.LENGTH_SHORT).show();
+                        }else if(error.networkResponse.statusCode == 403)
+                        {
+                            Toast.makeText(MainActivity.this, "Correo o contraseña no validos", Toast.LENGTH_SHORT).show();
+                        }else
+                        {
+                            Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         );

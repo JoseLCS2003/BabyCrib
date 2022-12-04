@@ -30,6 +30,10 @@ public class Registrase extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrase);
+        iniciar();
+    }
+    private void iniciar()
+    {
         nom=findViewById(R.id.name);
         mail=findViewById(R.id.email);
         telefono=findViewById(R.id.telefono);
@@ -78,7 +82,7 @@ public class Registrase extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(Registrase.this, "Registro Exitoso", Toast.LENGTH_SHORT).show();
-                        CountDownTimer t =new CountDownTimer(1000,1000) {
+                        CountDownTimer t =new CountDownTimer(2000,1000) {
                             @Override
                             public void onTick(long l) {
                                 Long d = l / 1000;
