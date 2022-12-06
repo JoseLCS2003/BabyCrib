@@ -53,6 +53,7 @@ public class AgregarCuna extends AppCompatActivity {
                 }else if(s1.isChecked()||s2.isChecked()||s3.isChecked()||s4.isChecked()||s5.isChecked()||s6.isChecked()){
                     agregar.setEnabled(false);
                     agregarCuna();
+                    agregar.setEnabled(true);
                 }else {
                     Toast.makeText(AgregarCuna.this, "Seleccione minimo un sensor", Toast.LENGTH_SHORT).show();
                 }
@@ -77,8 +78,8 @@ public class AgregarCuna extends AppCompatActivity {
             e.printStackTrace();
         }
         Integer id=getSharedPreferences("credenciales",Context.MODE_PRIVATE).getInt("id",0);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                "http://192.168.100.180:8000/api/create/"+id.toString(),
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                "url","http://0.0.0.0/")+"create/"+id.toString(),
                 datos,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -100,7 +101,6 @@ public class AgregarCuna extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        agregar.setEnabled(true);
                         if(error.networkResponse.statusCode == 406)
                         {
                             Toast.makeText(AgregarCuna.this, "Nombre ya utilizado", Toast.LENGTH_SHORT).show();
@@ -108,7 +108,9 @@ public class AgregarCuna extends AppCompatActivity {
                         {
                             Toast.makeText(AgregarCuna.this, "No se encontro el usuario", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(AgregarCuna.this, "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AgregarCuna.this, "Error"+String.valueOf(
+                                    error.networkResponse.statusCode
+                            ), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -123,7 +125,8 @@ public class AgregarCuna extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.exit){
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET,"http://192.168.100.180:8000/api/logout", null,
+                    Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                    "url","http://0.0.0.0/")+"logout", null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

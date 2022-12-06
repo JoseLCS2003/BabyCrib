@@ -84,8 +84,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                "http://192.168.100.180:8000/api/logging",
+                Request.Method.POST,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                "url","http://0.0.0.0/")+"logging",
                 datos,
                 new Response.Listener<JSONObject>() {
                     @Override

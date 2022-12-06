@@ -73,10 +73,9 @@ public class Registrase extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url="http://192.168.100.180:8000/api/logup";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                url,
+                Request.Method.POST,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                "url","http://0.0.0.0/")+"logup",
                 persona,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -99,7 +98,6 @@ public class Registrase extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         Toast.makeText(Registrase.this, "Error al momento de registrar", Toast.LENGTH_SHORT).show();
                     }
                 }

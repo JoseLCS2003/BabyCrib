@@ -1,6 +1,8 @@
 package com.example.babycrib;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,22 +19,32 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.babycrib.Adaptadores.CunaAdaptador;
+import com.example.babycrib.Modelos.Cuna;
 import com.example.babycrib.Singleton.VolleySingleton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Home extends AppCompatActivity {
     VolleySingleton instance;
     Button agg;
+    Boolean res=false;
+    List<Cuna> cunaList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         instance = VolleySingleton.getInstance(this);
         agg = findViewById(R.id.NuevaCuna);
+        obtenerCunas();
         agg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +54,14 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    private void iniciar()
+    {
+        CunaAdaptador listAdapter = new CunaAdaptador(cunaList);
+        RecyclerView recyclerView = findViewById(R.id.Cunas);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(listAdapter);
+    }
     public boolean onCreateOptionsMenu(android.view.Menu menu){
         getMenuInflater().inflate(R.menu.menu_main,menu);
         return true;
@@ -50,7 +70,8 @@ public class Home extends AppCompatActivity {
         int id = item.getItemId();
         if(id == R.id.exit){
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.GET,"http://192.168.100.180:8000/api/logout", null,
+                    Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                            "url","http://0.0.0.0/")+"logout", null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -80,5 +101,37 @@ public class Home extends AppCompatActivity {
             Toast.makeText(Home.this, "Hola", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void obtenerCunas()
+    {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
+                        "url","http://0.0.0.0/")+"cuna/"+String.valueOf(getSharedPreferences(
+                                "credenciales",MODE_PRIVATE).getInt("id",0)),
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Gson gson = new Gson();
+                            final Type tipoListCuna = new TypeToken<List<Cuna>>(){}.getType();
+                            cunaList = gson.fromJson(String.valueOf(response.getJSONArray("data")),
+                                    tipoListCuna);
+                            iniciar();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Home.this,"Error",Toast.LENGTH_SHORT).show();
+                        iniciar();
+                    }
+                }
+        );
+        instance.getRequestQueue().add(jsonObjectRequest);
     }
 }

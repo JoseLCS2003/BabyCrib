@@ -18,6 +18,11 @@ public class inicio extends AppCompatActivity {
         splash();
     }
     public void splash(){
+        SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("arduiono","aio_TZdt143aF1doR4Q8tmLHS0j1ALZU");
+        editor.putString("url","http://34.203.216.195/api/");
+        editor.commit();
         CountDownTimer t =new CountDownTimer(5000,1000) {
             @Override
             public void onTick(long l) {
@@ -26,7 +31,6 @@ public class inicio extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
                 if(preferences.getString("token","error") != "error"){
                     Intent i=new Intent(getApplicationContext(),Home.class);
                     startActivity(i);
