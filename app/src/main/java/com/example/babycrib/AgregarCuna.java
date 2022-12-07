@@ -66,12 +66,12 @@ public class AgregarCuna extends AppCompatActivity {
         try {
             cuna.put("name",nombre.getText().toString());
             cuna.put("description",descripcion.getText().toString());
-            sensores.put("sensor1",s1.isChecked());
-            sensores.put("sensor2",s2.isChecked());
-            sensores.put("sensor3",s3.isChecked());
-            sensores.put("sensor4",s4.isChecked());
-            sensores.put("sensor5",s5.isChecked());
-            sensores.put("sensor6",s6.isChecked());
+            sensores.put("Vibracion",s1.isChecked());
+            sensores.put("Sonido",s2.isChecked());
+            sensores.put("Peso",s3.isChecked());
+            sensores.put("Luz",s4.isChecked());
+            sensores.put("Humo",s5.isChecked());
+            sensores.put("Temperatura",s6.isChecked());
             datos.put("sensores",sensores);
             datos.put("cuna",cuna);
         } catch (JSONException e) {

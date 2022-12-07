@@ -32,8 +32,10 @@ public class CunaAdaptador extends RecyclerView.Adapter<CunaAdaptador.viewHolder
     public int getItemCount() {
         return lp.size();
     }
-    TextView name,desc;
+
+
     public class viewHolder extends RecyclerView.ViewHolder {
+        TextView name,desc;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
             name=itemView.findViewById(R.id.cunaName);
