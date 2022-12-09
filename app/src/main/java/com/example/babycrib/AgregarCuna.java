@@ -113,7 +113,16 @@ public class AgregarCuna extends AppCompatActivity {
                             ), Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                }){
+            public Map<String,String> getHeaders() throws AuthFailureError{
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer "+getSharedPreferences("credenciales",
+                        Context.MODE_PRIVATE).getString("token","null"));
+                headers.put("aioKey",getSharedPreferences("credenciales",MODE_PRIVATE).
+                        getString("arduino","none"));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 

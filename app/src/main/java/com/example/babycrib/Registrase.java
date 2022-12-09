@@ -69,6 +69,7 @@ public class Registrase extends AppCompatActivity {
             datos.put("name",nom.getText().toString());
             datos.put("email",mail.getText().toString());
             datos.put("password",contra.getText().toString());
+            datos.put("tel",telefono.getText().toString());
             persona.put("persona",datos);
         } catch (JSONException e) {
             e.printStackTrace();

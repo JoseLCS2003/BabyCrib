@@ -20,8 +20,8 @@ public class inicio extends AppCompatActivity {
     public void splash(){
         SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("arduiono","aio_TZdt143aF1doR4Q8tmLHS0j1ALZU");
-        editor.putString("url","http://192.168.253.224:8000/api/");
+        editor.putString("arduino","aio_xjqO593cytDxK2LWTFJoCh8WZB56");
+        editor.putString("url","http://192.168.100.180:8000/api/");
         editor.commit();
         CountDownTimer t =new CountDownTimer(5000,1000) {
             @Override

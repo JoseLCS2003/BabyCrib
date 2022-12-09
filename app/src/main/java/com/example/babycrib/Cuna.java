@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cuna extends AppCompatActivity {
     List<Sensores> sensoresLista;
@@ -63,7 +66,16 @@ public class Cuna extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                     }
                 }
-        );
+        ){
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer "+getSharedPreferences("credenciales",
+                        Context.MODE_PRIVATE).getString("token","null"));
+                headers.put("aioKey",getSharedPreferences("credenciales",MODE_PRIVATE).
+                        getString("arduino","none"));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
     public void inicio(List<Sensores> senso)
