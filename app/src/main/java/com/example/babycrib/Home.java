@@ -128,10 +128,18 @@ public class Home extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(Home.this,"Error",Toast.LENGTH_SHORT).show();
-                        iniciar();
                     }
                 }
-        );
+        ){
+            public Map<String,String> getHeaders() throws AuthFailureError{
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer "+getSharedPreferences("credenciales",
+                        Context.MODE_PRIVATE).getString("token","null"));
+                headers.put("aioKey",getSharedPreferences("credenciales",MODE_PRIVATE).
+                        getString("arduino","none"));
+                return headers;
+            }
+        };
         instance.getRequestQueue().add(jsonObjectRequest);
     }
 }

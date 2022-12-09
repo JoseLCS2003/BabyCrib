@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     inicial.setEnabled(false);
                     inciarSesion();
-                    inicial.setEnabled(true);
                 }
             }
         });
@@ -114,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        inicial.setEnabled(true);
                         if(error.networkResponse.statusCode == 401)
                         {
                             Toast.makeText(MainActivity.this, "No se a activado el usuario", Toast.LENGTH_SHORT).show();

@@ -55,7 +55,6 @@ public class Registrase extends AppCompatActivity {
                 else{
                     registro.setEnabled(false);
                     registrar();
-                    registro.setEnabled(true);
                 }
             }
         });
@@ -69,6 +68,7 @@ public class Registrase extends AppCompatActivity {
             datos.put("name",nom.getText().toString());
             datos.put("email",mail.getText().toString());
             datos.put("password",contra.getText().toString());
+            datos.put("tel",telefono.getText().toString());
             persona.put("persona",datos);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -98,6 +98,7 @@ public class Registrase extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        registro.setEnabled(true);
                         Toast.makeText(Registrase.this, "Error al momento de registrar", Toast.LENGTH_SHORT).show();
                     }
                 }

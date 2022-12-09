@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -20,7 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Cuna extends AppCompatActivity {
     List<Sensores> sensoresLista;
@@ -31,6 +35,10 @@ public class Cuna extends AppCompatActivity {
         setContentView(R.layout.activity_cuna);
         nomCuna=findViewById(R.id.nomCuna);
         desCuna=findViewById(R.id.desCuna);
+        Bundle parametros = this.getIntent().getExtras();
+        String datos[]=parametros.getStringArray("datos");
+        nomCuna.setText(datos[0]);
+        desCuna.setText(datos[1]);
         getValores();
     }
     public void getValores()
@@ -52,7 +60,8 @@ public class Cuna extends AppCompatActivity {
                             final Type tipoListSensores = new TypeToken<List<Sensores>>(){}.getType();
                             sensoresLista = gson.fromJson(String.valueOf(response.getJSONArray("data")),
                                     tipoListSensores);
-                            inicio(sensoresLista);
+
+                            //inicio(sensoresLista);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -61,9 +70,19 @@ public class Cuna extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Cuna.this,"Error",Toast.LENGTH_SHORT).show();
                     }
                 }
-        );
+        ){
+            public Map<String,String> getHeaders() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<>();
+                headers.put("Authorization","Bearer "+getSharedPreferences("credenciales",
+                        Context.MODE_PRIVATE).getString("token","null"));
+                headers.put("aioKey",getSharedPreferences("credenciales",MODE_PRIVATE).
+                        getString("arduino","none"));
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
     public void inicio(List<Sensores> senso)
