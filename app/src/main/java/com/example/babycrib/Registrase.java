@@ -55,7 +55,6 @@ public class Registrase extends AppCompatActivity {
                 else{
                     registro.setEnabled(false);
                     registrar();
-                    registro.setEnabled(true);
                 }
             }
         });
@@ -99,6 +98,7 @@ public class Registrase extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        registro.setEnabled(true);
                         Toast.makeText(Registrase.this, "Error al momento de registrar", Toast.LENGTH_SHORT).show();
                     }
                 }

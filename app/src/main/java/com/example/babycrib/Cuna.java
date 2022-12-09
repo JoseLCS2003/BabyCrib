@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -34,6 +35,10 @@ public class Cuna extends AppCompatActivity {
         setContentView(R.layout.activity_cuna);
         nomCuna=findViewById(R.id.nomCuna);
         desCuna=findViewById(R.id.desCuna);
+        Bundle parametros = this.getIntent().getExtras();
+        String datos[]=parametros.getStringArray("datos");
+        nomCuna.setText(datos[0]);
+        desCuna.setText(datos[1]);
         getValores();
     }
     public void getValores()
@@ -55,7 +60,8 @@ public class Cuna extends AppCompatActivity {
                             final Type tipoListSensores = new TypeToken<List<Sensores>>(){}.getType();
                             sensoresLista = gson.fromJson(String.valueOf(response.getJSONArray("data")),
                                     tipoListSensores);
-                            inicio(sensoresLista);
+
+                            //inicio(sensoresLista);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -64,6 +70,7 @@ public class Cuna extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Cuna.this,"Error",Toast.LENGTH_SHORT).show();
                     }
                 }
         ){

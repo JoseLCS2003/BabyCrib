@@ -53,7 +53,6 @@ public class AgregarCuna extends AppCompatActivity {
                 }else if(s1.isChecked()||s2.isChecked()||s3.isChecked()||s4.isChecked()||s5.isChecked()||s6.isChecked()){
                     agregar.setEnabled(false);
                     agregarCuna();
-                    agregar.setEnabled(true);
                 }else {
                     Toast.makeText(AgregarCuna.this, "Seleccione minimo un sensor", Toast.LENGTH_SHORT).show();
                 }
@@ -101,6 +100,7 @@ public class AgregarCuna extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        agregar.setEnabled(true);
                         if(error.networkResponse.statusCode == 406)
                         {
                             Toast.makeText(AgregarCuna.this, "Nombre ya utilizado", Toast.LENGTH_SHORT).show();

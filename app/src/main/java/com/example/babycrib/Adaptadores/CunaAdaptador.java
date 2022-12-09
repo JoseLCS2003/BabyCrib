@@ -1,8 +1,13 @@
 package com.example.babycrib.Adaptadores;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,14 +41,28 @@ public class CunaAdaptador extends RecyclerView.Adapter<CunaAdaptador.viewHolder
 
     public class viewHolder extends RecyclerView.ViewHolder {
         TextView name,desc;
+        Button moreDetails;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
+            moreDetails=itemView.findViewById(R.id.moreDetails);
             name=itemView.findViewById(R.id.cunaName);
             desc=itemView.findViewById(R.id.cunaDesc);
         }
         public void setData(Cuna cuna){
             name.setText(cuna.getName());
             desc.setText(cuna.getDescription());
+            moreDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String datos[]={name.getText().toString(),desc.getText().toString()};
+                    Bundle parmetros = new Bundle();
+                    parmetros.putStringArray("datos", datos);
+
+                    Intent i = new Intent(itemView.getContext(), com.example.babycrib.Cuna.class);
+                    i.putExtras(parmetros);
+                    itemView.getContext().startActivity(i);
+                }
+            });
         }
     }
 }
