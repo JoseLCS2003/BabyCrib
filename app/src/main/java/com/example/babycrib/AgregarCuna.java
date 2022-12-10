@@ -78,7 +78,7 @@ public class AgregarCuna extends AppCompatActivity {
         }
         Integer id=getSharedPreferences("credenciales",Context.MODE_PRIVATE).getInt("id",0);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, getSharedPreferences("credenciales",MODE_PRIVATE).getString(
-                "url","http://34.226.147.180/api/")+"create/"+id.toString(),
+                "url","http://0.0.0.0/")+"create/"+id.toString(),
                 datos,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -135,7 +135,7 @@ public class AgregarCuna extends AppCompatActivity {
         if(id == R.id.exit){
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
-                    "url","http://34.226.147.180/api/")+"logout", null,
+                    "url","http://0.0.0.0/")+"logout", null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
