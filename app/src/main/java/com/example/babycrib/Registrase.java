@@ -75,7 +75,7 @@ public class Registrase extends AppCompatActivity {
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
-                "url","http://0.0.0.0/")+"logup",
+                "url","http://34.226.147.180/api/")+"logup",
                 persona,
                 new Response.Listener<JSONObject>() {
                     @Override

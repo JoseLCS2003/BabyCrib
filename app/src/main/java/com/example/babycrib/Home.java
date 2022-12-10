@@ -71,7 +71,7 @@ public class Home extends AppCompatActivity {
         if(id == R.id.exit){
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
-                            "url","http://0.0.0.0/")+"logout", null,
+                            "url","http://34.226.147.180/")+"logout", null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -107,7 +107,7 @@ public class Home extends AppCompatActivity {
     {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,getSharedPreferences("credenciales",MODE_PRIVATE).getString(
-                        "url","http://0.0.0.0/")+"cuna/"+String.valueOf(getSharedPreferences(
+                        "url","http://34.226.147.180/")+"cuna/"+String.valueOf(getSharedPreferences(
                                 "credenciales",MODE_PRIVATE).getInt("id",0)),
                 null,
                 new Response.Listener<JSONObject>() {
