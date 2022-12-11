@@ -20,7 +20,7 @@ public class inicio extends AppCompatActivity {
     public void splash(){
         SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("arduino","aio_KsXH94NweMDJIIFxPKUZo0hETUuw");
+        editor.putString("arduino","aio_rlIe15MniOddb6oUHZlzZP4gfXFr");
         editor.putString("url","http://34.226.147.180/api/");
         editor.commit();
         CountDownTimer t =new CountDownTimer(5000,1000) {
@@ -34,10 +34,12 @@ public class inicio extends AppCompatActivity {
                 if(preferences.getString("token","error") != "error"){
                     Intent i=new Intent(getApplicationContext(),Home.class);
                     startActivity(i);
+                    finish();
                 }
                 else {
                     Intent i=new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(i);
+                    finish();
                 }
             }
         }.start();
