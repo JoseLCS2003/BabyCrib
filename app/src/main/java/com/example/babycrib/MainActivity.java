@@ -1,12 +1,18 @@
 package com.example.babycrib;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Patterns;
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         iniciar();
+        permisos();
     }
     private void iniciar()
     {
@@ -147,5 +154,36 @@ public class MainActivity extends AppCompatActivity {
             resultado = false;
         }
         return resultado;
+    }
+
+   private void permisos(){
+        int solicitarLlamada= ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE);
+        int solicitarSms= ActivityCompat.checkSelfPermission(MainActivity.this,Manifest.permission.SEND_SMS);
+        int solicitarAlmacenamiento =ActivityCompat.checkSelfPermission(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int solicitarCamada=ActivityCompat.checkSelfPermission(MainActivity.this,Manifest.permission.CAMERA);
+        int solicitarUbicacion=ActivityCompat.checkSelfPermission(MainActivity.this,Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (solicitarLlamada == PackageManager.PERMISSION_GRANTED && solicitarSms == PackageManager.PERMISSION_GRANTED &&
+                solicitarAlmacenamiento == PackageManager.PERMISSION_GRANTED && solicitarCamada == PackageManager.PERMISSION_GRANTED &&
+                solicitarUbicacion == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                requestPermissions(new String[]{Manifest.permission.CALL_PHONE,Manifest.permission.SEND_SMS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA,Manifest.permission.ACCESS_COARSE_LOCATION},200);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 255) {
+            if (grantResults.length>0&&grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                permisos();
+            }else{
+                Toast.makeText(this, "Permiso Denegado", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
