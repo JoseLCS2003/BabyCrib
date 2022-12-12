@@ -81,7 +81,7 @@
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintStart_toStartOf="@id/start"
         app:layout_constraintTop_toBottomOf="@id/desCuna"
-        app:layout_constraintBottom_toTopOf="@id/eliminarCuna">
+        app:layout_constraintBottom_toTopOf="@id/editCuna">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,13 +102,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:id="@+id/sen1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vibracion"
-                android:textSize="18sp"/>
+                android:text="Movimiento"
+                android:textSize="18sp" />
             <TextView
                 android:id="@+id/res1"
                 android:layout_width="0dp"
@@ -211,13 +212,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/eliminarCuna"
+        android:id="@+id/editCuna"
         android:layout_width="57dp"
         android:layout_height="67dp"
         android:backgroundTint="#8E24AA"
         android:drawableLeft="@drawable/pencil_outline"
+        android:enabled="false"
         app:cornerRadius="500dp"
-        app:layout_constraintBottom_toTopOf="@id/editarCuna"
+        app:layout_constraintBottom_toTopOf="@id/eliminarCuna"
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/start"
@@ -226,17 +228,18 @@
         tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
 
     <Button
-        android:id="@+id/editarCuna"
+        android:id="@+id/eliminarCuna"
         android:layout_width="57dp"
         android:layout_height="67dp"
         android:backgroundTint="#DE0303"
         android:drawableLeft="@drawable/delete"
+        android:enabled="false"
         app:cornerRadius="500dp"
         app:layout_constraintBottom_toBottomOf="@id/bottom"
         app:layout_constraintEnd_toEndOf="@id/end"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/start"
-        app:layout_constraintTop_toBottomOf="@id/eliminarCuna"
+        app:layout_constraintTop_toBottomOf="@id/editCuna"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

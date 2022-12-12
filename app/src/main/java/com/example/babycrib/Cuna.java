@@ -3,8 +3,11 @@ package com.example.babycrib;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import java.util.Map;
 
 public class Cuna extends AppCompatActivity {
     List<Sensores> sensoresLista;
+    Button eliminar,editar;
     TextView res1,res2,res3,res4,res5,res6,nomCuna,desCuna;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,18 @@ public class Cuna extends AppCompatActivity {
         setContentView(R.layout.activity_cuna);
         nomCuna=findViewById(R.id.nomCuna);
         desCuna=findViewById(R.id.desCuna);
+        editar = findViewById(R.id.editCuna);
+        eliminar=findViewById(R.id.eliminarCuna);
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle parametros = new Bundle();
+                parametros.putString("nom",nomCuna.getText().toString());
+                Intent i=new Intent(getApplicationContext(),AgregarCuna.class);
+                i.putExtras(parametros);
+                startActivity(i);
+            }
+        });
         Bundle parametros = this.getIntent().getExtras();
         String datos[]=parametros.getStringArray("datos");
         nomCuna.setText(datos[0]);
@@ -60,8 +76,7 @@ public class Cuna extends AppCompatActivity {
                             final Type tipoListSensores = new TypeToken<List<Sensores>>(){}.getType();
                             sensoresLista = gson.fromJson(String.valueOf(response.getJSONArray("data")),
                                     tipoListSensores);
-
-                            //inicio(sensoresLista);
+                            inicio();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -85,19 +100,28 @@ public class Cuna extends AppCompatActivity {
         };
         VolleySingleton.getInstance(this).getRequestQueue().add(jsonObjectRequest);
     }
-    public void inicio(List<Sensores> senso)
+    public void inicio()
     {
         res1=findViewById(R.id.res1);
-        res1=findViewById(R.id.res2);
-        res1=findViewById(R.id.res3);
-        res1=findViewById(R.id.res4);
-        res1=findViewById(R.id.res5);
-        res1=findViewById(R.id.res6);
-        res1.setText(senso.get(0).getValue());
-        res2.setText(senso.get(1).getValue());
-        res3.setText(senso.get(2).getValue());
-        res4.setText(senso.get(3).getValue());
-        res5.setText(senso.get(4).getValue());
-        res6.setText(senso.get(5).getValue());
+        res2=findViewById(R.id.res2);
+        res3=findViewById(R.id.res3);
+        res4=findViewById(R.id.res4);
+        res5=findViewById(R.id.res5);
+        res6=findViewById(R.id.res6);
+        if(sensoresLista.get(0).getValue() == "1"){
+        res1.setText("Hay movimiento");
+        }else{res1.setText("No hay movimiento");}
+        if(sensoresLista.get(1).getValue() == "1"){
+        res2.setText("Si hay sonido");
+        }else{res2.setText("No hay sonido");}
+        res3.setText(sensoresLista.get(2).getValue());
+        if(Integer.parseInt(sensoresLista.get(3).getValue()) < 1000){
+        res4.setText("Luz apagada");
+        }else{res4.setText("Luz encendida");}
+        if(sensoresLista.get(4).getValue() == "1"){
+        res5.setText("Hay humo");
+        }else{res5.setText("No hay humo");}
+        res6.setText(sensoresLista.get(5).getValue()+"  Grados");
+        getValores();
     }
 }

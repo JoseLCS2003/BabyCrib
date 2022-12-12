@@ -48,7 +48,10 @@ public class Home extends AppCompatActivity {
         agg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle parametros = new Bundle();
+                parametros.putString("nom","");
                 Intent i=new Intent(getApplicationContext(),AgregarCuna.class);
+                i.putExtras(parametros);
                 startActivity(i);
             }
         });

@@ -89,7 +89,7 @@ public class Registrase extends AppCompatActivity {
 
                             @Override
                             public void onFinish() {
-                                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                                Intent i=new Intent(getApplicationContext(),verificarCodigo.class);
                                 startActivity(i);
                             }
                         }.start();
