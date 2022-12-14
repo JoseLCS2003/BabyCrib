@@ -78,7 +78,8 @@ public class Home extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            SharedPreferences.Editor editor = getSharedPreferences("credenciales", MODE_PRIVATE).edit();
+                            SharedPreferences.Editor editor = getSharedPreferences("credenciales",
+                                    MODE_PRIVATE).edit();
                             editor.clear().commit();
                             Intent i=new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(i);

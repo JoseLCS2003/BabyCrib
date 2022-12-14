@@ -2,6 +2,7 @@ package com.example.babycrib;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +35,11 @@ public class Registrase extends AppCompatActivity {
     }
     private void iniciar()
     {
+        SharedPreferences preferences =getSharedPreferences("credenciales", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("arduino","aio_XuDR855LzMrt1MK6HjiXRQdBw1za");
+        editor.putString("url","http://35.175.142.42/api/");
+        editor.commit();
         nom=findViewById(R.id.name);
         mail=findViewById(R.id.email);
         telefono=findViewById(R.id.telefono);

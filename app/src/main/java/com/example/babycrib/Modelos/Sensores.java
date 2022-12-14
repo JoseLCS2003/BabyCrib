@@ -1,7 +1,7 @@
 package com.example.babycrib.Modelos;
 
 public class Sensores {
-    final private String value;
+    private String value;
 
     public String getValue() {
         return value;
